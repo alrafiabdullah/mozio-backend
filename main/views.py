@@ -108,3 +108,35 @@ class ServiceAreaClass(GenericAPIView):
             return Response(serialized_data.errors, status=status.HTTP_400_BAD_REQUEST)
         except:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class CheckServiceArea(GenericAPIView):
+    def get_serializer_class(self):
+        return
+
+    def get(self, request, *args, **kwargs):
+        # to check if service area exists by longitude and latitude
+        try:
+            lat = request.data["lat"]
+            lng = request.data["lng"]
+
+            # in point (lng, lat), normal is (lat, lng)
+            point = Point(float(lng), float(lat))
+
+            service = ServiceArea.objects.filter(location__contains=point)
+
+            if service.exists():
+                service_dict = {}
+                for serv in service:
+                    service_dict.update({
+                        serv.id: {
+                            "name": serv.name,
+                            "price": serv.price,
+                            "provider": serv.provider.name,
+                        }
+                    })
+
+                return Response(service_dict, status=status.HTTP_200_OK)
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        except:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
