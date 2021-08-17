@@ -44,6 +44,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'leaflet',
+    'djmoney',
+    'phonenumber_field',
     'main',
 ]
 
@@ -83,8 +87,12 @@ WSGI_APPLICATION = 'mozio_backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': data["POSTGRESQL_NAME"],
+        'USER': data["POSTGRESQL_USER"],
+        'PASSWORD': data["POSTGRESQL_PASSWORD"],
+        'HOST': data["POSTGRESQL_HOST"],
+        'PORT': data["POSTGRESQL_PORT"],
     }
 }
 
