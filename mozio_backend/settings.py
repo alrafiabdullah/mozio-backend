@@ -149,3 +149,10 @@ LEAFLET_CONFIG = {
     'ATTRIBUTION_PREFIX': '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     'SCALE': 'both'
 }
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'cache_table',
+    }
+}
