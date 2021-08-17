@@ -29,7 +29,7 @@ class Provider(models.Model):
     )
 
     name = models.CharField(max_length=100, default="")
-    email = models.EmailField(unique=True)
+    email = models.EmailField(default="")
     phone_number = PhoneNumberField(default="")
     language = models.CharField(
         max_length=2, choices=LANGUAGE_CHOICES, default="bn")
