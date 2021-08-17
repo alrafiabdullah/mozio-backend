@@ -44,6 +44,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'leaflet',
+    'phonenumber_field',
+    'main',
 ]
 
 MIDDLEWARE = [
@@ -82,8 +86,12 @@ WSGI_APPLICATION = 'mozio_backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': data["POSTGRESQL_NAME"],
+        'USER': data["POSTGRESQL_USER"],
+        'PASSWORD': data["POSTGRESQL_PASSWORD"],
+        'HOST': data["POSTGRESQL_HOST"],
+        'PORT': data["POSTGRESQL_PORT"],
     }
 }
 
@@ -130,3 +138,21 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+PHONENUMBER_DB_FORMAT = 'INTERNATIONAL'
+
+LEAFLET_CONFIG = {
+    'DEFAULT_CENTER': (51.5, -0.2),
+    'DEFAULT_ZOOM': 6,
+    'MIN_ZOOM': 3,
+    'MAX_ZOOM': 18,
+    'ATTRIBUTION_PREFIX': '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    'SCALE': 'both'
+}
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'cache_table',
+    }
+}
