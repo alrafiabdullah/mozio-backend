@@ -14,28 +14,33 @@ class ProviderClass(GenericAPIView):
 
     def get(self, request, *args, **kwargs):
         # to retreive one provider by id
-        if int(request.data["id"]) > 0:
-            try:
-                provider = Provider.objects.get(id=request.data["id"])
-                serialized_data = ProviderSerializer(provider)
-                return Response(serialized_data.data, status=status.HTTP_200_OK)
-            except:
-                return Response({"Provider does not exist!"}, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            if int(request.data["id"]) > 0:
+                try:
+                    provider = Provider.objects.get(id=request.data["id"])
+                    serialized_data = ProviderSerializer(provider)
+                    return Response(serialized_data.data, status=status.HTTP_200_OK)
+                except:
+                    return Response({"Provider does not exist!"}, status=status.HTTP_404_NOT_FOUND)
 
-        # to retreive all providers
-        providers = Provider.objects.all()
-        serialized_data = ProviderSerializer(providers, many=True)
+            # to retreive all providers
+            providers = Provider.objects.all()
+            serialized_data = ProviderSerializer(providers, many=True)
 
-        return Response(serialized_data.data, status=status.HTTP_200_OK)
+            return Response(serialized_data.data, status=status.HTTP_200_OK)
+        except:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
 
     def post(self, request, *args, **kwargs):
         # to create one provider
-        serialized_data = ProviderSerializer(data=request.data)
-        if serialized_data.is_valid():
-            serialized_data.save()
-            return Response(serialized_data.data, status=status.HTTP_201_CREATED)
-
-        return Response(serialized_data.errors, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            serialized_data = ProviderSerializer(data=request.data)
+            if serialized_data.is_valid():
+                serialized_data.save()
+                return Response(serialized_data.data, status=status.HTTP_201_CREATED)
+            return Response(serialized_data.errors, status=status.HTTP_406_NOT_ACCEPTABLE)
+        except:
+            return Response(serialized_data.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, *args, **kwargs):
         # to delete one provider by id
@@ -64,28 +69,34 @@ class ServiceAreaClass(GenericAPIView):
 
     def get(self, request, *args, **kwargs):
         # to retreive one service area by id
-        if int(request.data["id"]) > 0:
-            try:
-                service_area = ServiceArea.objects.get(id=request.data["id"])
-                serialized_data = ServiceAreaSerializer(service_area)
-                return Response(serialized_data.data, status=status.HTTP_200_OK)
-            except:
-                return Response({"Service area does not exist!"}, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            if int(request.data["id"]) > 0:
+                try:
+                    service_area = ServiceArea.objects.get(
+                        id=request.data["id"])
+                    serialized_data = ServiceAreaSerializer(service_area)
+                    return Response(serialized_data.data, status=status.HTTP_200_OK)
+                except:
+                    return Response({"Service area does not exist!"}, status=status.HTTP_404_NOT_FOUND)
 
-        # to retreive all service areas
-        service_areas = ServiceArea.objects.all()
-        serialized_data = ServiceAreaSerializer(service_areas, many=True)
+            # to retreive all service areas
+            service_areas = ServiceArea.objects.all()
+            serialized_data = ServiceAreaSerializer(service_areas, many=True)
 
-        return Response(serialized_data.data, status=status.HTTP_200_OK)
+            return Response(serialized_data.data, status=status.HTTP_200_OK)
+        except:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
 
     def post(self, request, *args, **kwargs):
         # to create one service area
-        serialized_data = ServiceAreaSerializer(data=request.data)
-        if serialized_data.is_valid():
-            serialized_data.save()
-            return Response(serialized_data.data, status=status.HTTP_201_CREATED)
-
-        return Response(serialized_data.errors, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            serialized_data = ServiceAreaSerializer(data=request.data)
+            if serialized_data.is_valid():
+                serialized_data.save()
+                return Response(serialized_data.data, status=status.HTTP_201_CREATED)
+            return Response(serialized_data.errors, status=status.HTTP_406_NOT_ACCEPTABLE)
+        except:
+            return Response(serialized_data.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, *args, **kwargs):
         # to delete one service area by id
