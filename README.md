@@ -2,6 +2,29 @@
 
 ##
 
+## Requirements
+
+- Create and activate a virtual environment.
+- Create `secrets.json` in the root of the project with following attributes:
+
+```
+{
+    "DJANGO_SECRET_KEY": "THE_SECRET_KEY",
+    "POSTGRESQL_NAME": "THE_NAME",
+    "POSTGRESQL_USER": "THE_USER",
+    "POSTGRESQL_PASSWORD": "THE_PASSWORD",
+    "POSTGRESQL_HOST": "THE_HOSTNAME",
+    "POSTGRESQL_PORT": THE_PORT
+}
+```
+
+- Run `pip install -r requirements.txt`.
+- Run `python3 manage.py migrate`.
+- Run `python3 manage.py runserver`.
+- The webapp should be available at `http://127.0.0.1:8000`.
+
+##
+
 ## Overview
 
 In this Django project, I am using PostGIS to store the geometries of the polygons in the database. There is only one application named `main`. In the `main`, there are 3 urls with total 9 endpoints and 3 views. I really enjoyed exploring GIS and PostGIS. I was interested when I knew about it but never had the chance to use it. I tried to name the functions and classes as much elaborately as possible so that extra comments are not needed unless it is necessary. Also, I added cache functionality only in the `get` request of `Service Area` model because this is the model that can get heavier over the time. Here are the detailed endpoints:
