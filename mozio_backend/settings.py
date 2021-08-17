@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'leaflet',
-    'djmoney',
     'phonenumber_field',
     'main',
 ]
@@ -139,3 +138,14 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+PHONENUMBER_DB_FORMAT = 'INTERNATIONAL'
+
+LEAFLET_CONFIG = {
+    'DEFAULT_CENTER': (51.5, -0.2),
+    'DEFAULT_ZOOM': 6,
+    'MIN_ZOOM': 3,
+    'MAX_ZOOM': 18,
+    'ATTRIBUTION_PREFIX': '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    'SCALE': 'both'
+}
