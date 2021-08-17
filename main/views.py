@@ -1,4 +1,7 @@
 from django.contrib.gis.geos import Point
+from django.views.decorators.cache import cache_page
+from django.utils.decorators import method_decorator
+
 
 from rest_framework import status
 from rest_framework.generics import GenericAPIView
@@ -67,6 +70,8 @@ class ProviderClass(GenericAPIView):
 class ServiceAreaClass(GenericAPIView):
     serializer_class = ServiceAreaSerializer
 
+    # caches the get request for 2 hours per request
+    @method_decorator(cache_page(60*60*2))
     def get(self, request, *args, **kwargs):
         # to retreive one service area by id
         try:
